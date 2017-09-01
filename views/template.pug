@@ -1,0 +1,68 @@
+html
+    head
+        block head_pre
+        title #{title}
+
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    
+        link(rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons')
+        link(rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Pacifico')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css')
+        link(rel='stylesheet' href='/css/style.css')
+    
+        block head_post
+    body
+        block header
+            unless nonav
+                include navigation
+        block content
+        block footer
+    
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js')
+
+        script(type='text/javascript').
+            $(document).ready(() => {
+                $('.validate-form').validate({
+                    errorClass: 'invalid',
+                    errorPlacement: function(error, element) {
+                        $(element)
+                            .closest('form')
+                            .find(`label[for='${element.attr('id')}']`)
+                            .attr('data-error', error.text());
+                    },
+                    rules: {
+                        email: {
+                            required: true,
+                            email: true
+                        },
+                        password: {
+                            required: true,
+                            minlength: 8,
+                            maxlength: 64
+                        },
+                        password_confirm: {
+                            required: true,
+                            equalTo: '#password'
+                        }
+                    },
+                    messages: {
+                        email: {
+                            required: 'Enter an Email address',
+                            email: 'Enter a valid Email address'
+                        },
+                        password: {
+                            required: 'Enter a password',
+                            minlength: 'Password is too short',
+                            maxlength: 'Password is too long'
+                        },
+                        password_confirm: {
+                            required: 'Confirm your password',
+                            equalTo: 'Passwords do not match'
+                        }
+                    }
+                });
+            });
+
+        block scripts
