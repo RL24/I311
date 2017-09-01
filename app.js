@@ -20,10 +20,11 @@ app.use(session({secret: 'X'}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(validator());
 
-app.get('*', (req, res, next) => {
-    console.log(`Requesting URL '${req.url}'`);
-    next();
-});
+if (process.env.ENVIRONMENT === 'debug')
+    app.get('*', (req, res, next) => {
+        console.log(`Requesting URL '${req.url}'`);
+        next();
+    });
 
 app.use('/', home);
 app.use('/', auth);

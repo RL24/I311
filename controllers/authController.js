@@ -1,6 +1,11 @@
 const express = require('express');
 const sha1 = require('sha1');
 const User = require('../model/user');
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
+
+const adapter = new FileSync('db.json');
+const db = low(adapter);
 
 exports.index = (req, res) => {
     res.redirect('/login');
@@ -11,16 +16,26 @@ exports.login = (req, res) => {
 };
 
 exports.login_post = (req, res) => {
-    if (req.session.user)
-        res.redirect('/logout');
-    else {
-        if (req.body.email === process.env.ADMIN_EMAIL && sha1(req.body.password) === process.env.ADMIN_PASSWORD) {
+    if (req.session.user) {
+        console.log('Already logged in, returning to previous page');
+        res.redirect('back');
+    } else {
+        console.log('Authenticating user');
+        
+        var matches = db.get('users').find({
+            email: req.body.email,
+            password: sha1(req.body.password)
+        }).value();
+
+        if (matches !== undefined) {
+            console.log('Logging in as admin');
             req.session.user = new User({
                 email: req.body.email,
                 password: sha1(req.body.password)
             });
             res.redirect('/');
         } else {
+            console.log('Failed to authenticate user');
             res.redirect('back');
         }
     }
