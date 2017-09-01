@@ -16,28 +16,22 @@ exports.login = (req, res) => {
 };
 
 exports.login_post = (req, res) => {
-    if (req.session.user) {
-        console.log('Already logged in, returning to previous page');
+    if (req.session.user)
         res.redirect('back');
-    } else {
-        console.log('Authenticating user');
-        
+    else {
         var matches = db.get('users').find({
             email: req.body.email,
             password: sha1(req.body.password)
         }).value();
 
         if (matches !== undefined) {
-            console.log('Logging in as admin');
             req.session.user = new User({
                 email: req.body.email,
                 password: sha1(req.body.password)
             });
             res.redirect('/');
-        } else {
-            console.log('Failed to authenticate user');
+        } else
             res.redirect('back');
-        }
     }
 };
 
@@ -58,6 +52,7 @@ exports.forgot_password_post = (req, res) => {
 };
 
 exports.logout = (req, res) => {
-    delete req.session.user;
-    res.redirect('/login');
+    if (req.session.user)
+        delete req.session.user;
+    res.redirect('/');
 };
