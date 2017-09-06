@@ -1,30 +1,19 @@
-extends template
+extends dashboard_template
 
-block content
-    div(class='vouter')
-        div(class='vinner')
-            div(class='container')
-                div(class='row')
-                    div(class='col s12 m6 offset-m3')
-                        form(class='validate-form' method='POST')
-                            div(class='card')
-                                div(class='card-content')
-                                    span(class='card-title') #{title}
-                                    div(class='input-field col s12')
-                                        i(class='material-icons prefix') email
-                                        input(id='email' name='email' type='email')
-                                        label(for='email') Email
-                                    div(class='input-field col s12')
-                                        i(class='material-icons prefix') lock
-                                        input(id='password' name='password' type='password')
-                                        label(for='password') Password
-                                    div(class='col s12 m12')
-                                        input(id='remember_me' type='checkbox')
-                                        label(for='remember_me') Remember me
-                                        a(class='waves-effect right extra-padding' href='/forgot_password') Forgot password?
-                                    div(class='clearfix')
-                                div(class='card-action')
-                                    div(class='right')
-                                        a(class='btn-flat waves-effect extra-margin' href='/register') Register
-                                        button(class='btn blue darken-2 waves-effect extra-margin' type='submit') Login
-                                    div(class='clearfix')
+block dashboard
+    div(class='container-fluid')
+        div(class='row')
+            each contact in session.user.contacts
+                div(class='col s6 m4 l3')
+                    div(class='card')
+                        div(class='card-image' style='position: relative;')
+                            img(src='/images/back.png')
+                            a(href='/contact/remove/' + contact.uid class='btn-floating btn-large halfway-fab waves-effect waves-light blue')
+                                i(class='material-icons') close
+                        div(class='card-content')
+                            span(class='card-title') #{contact.name}
+                            p.
+                                Email: #{contact.email}
+    div(class='fixed-action-btn')
+        a(class='btn-floating btn-large waves-effect waves-light blue' href='/contact/add')
+            i(class='material-icons') add

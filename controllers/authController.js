@@ -1,11 +1,13 @@
 const express = require('express');
-const sha1 = require('sha1');
-const User = require('../model/user');
-const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
 
-const adapter = new FileSync('db.json');
-const db = low(adapter);
+function XOR_hex(a, b) {
+    var res = "";
+    var i = a.length;
+    var j = b.length;
+    while (i-->0 && j-->0)
+        res = (parseInt(a.charAt(i), 16) ^ parseInt(b.charAt(j), 16)).toString(16) + res;
+    return res;
+}
 
 exports.index = (req, res) => {
     res.redirect('/login');
@@ -19,19 +21,29 @@ exports.login_post = (req, res) => {
     if (req.session.user)
         res.redirect('back');
     else {
-        var matches = db.get('users').find({
-            email: req.body.email,
-            password: sha1(req.body.password)
-        }).value();
+        var dbo = req.db.get('users').find({
+            email: req.body.email
+        });
+        var user = dbo.value();
 
-        if (matches !== undefined) {
-            req.session.user = new User({
-                email: req.body.email,
-                password: sha1(req.body.password)
-            });
-            res.redirect('/');
-        } else
-            res.redirect('back');
+        if (user !== undefined) {
+            var password = XOR_hex(req.body.password, user.salt);
+            if (user.password == req.sha1(password)) {
+                var date = Date();
+                var salt = req.sha1(user.uid + date);
+                password = XOR_hex(req.body.password, salt);
+
+                dbo.assign({
+                    password: req.sha1(password),
+                    lastLogin: date,
+                    salt: salt
+                }).write();
+                req.session.user = new req.User(user.uid, user.email, user.contacts);
+                res.redirect('/');
+                return;
+            }
+        }
+        res.redirect('back');
     }
 };
 
@@ -40,6 +52,26 @@ exports.register = (req, res) => {
 };
 
 exports.register_post = (req, res) => {
+    var exists = req.db.get('users').find({
+        email: req.body.email
+    }).value();
+    if (exists) {
+        res.redirect('back');
+        return;
+    }
+    var date = Date();
+    var uuid = req.uuid();
+    var salt = req.sha1(uuid + date);
+    var password = XOR_hex(req.body.password, salt);
+    req.db.get('users').push({
+        uid: uuid,
+        email: req.body.email,
+        password: req.sha1(password),
+        contacts: [],
+        lastLogin: date,
+        salt: salt
+    }).write();
+
     res.redirect('/');
 };
 
@@ -55,4 +87,12 @@ exports.logout = (req, res) => {
     if (req.session.user)
         delete req.session.user;
     res.redirect('/');
+};
+
+exports.terminate = (req, res) => {
+    if (req.session.user)
+        req.db.get('users').remove({
+            uid: req.session.user.uid
+        }).write();
+    res.redirect('/logout');
 };

@@ -1,0 +1,33 @@
+extends template
+
+block head_post
+    style(type='text/css').
+        header, main, footer {
+            padding-left: 300px;
+        }
+
+        @media only screen and (max-width: 992px) {
+            header, main, footer {
+                padding-left: 0;
+            }
+        }
+        
+
+block content
+    ul(class='side-nav fixed')
+        li
+            div(class='user-view')
+                div(class='background')
+                    img(class='waves-effect responsive-img' src='/images/back.png')
+                a(href='#!user' class='circle waves-effect waves-light')
+                    img(class='circle' src='/images/user.png')
+                span(class='white-text') #{session.user.email}
+                br
+        li
+            a(href='/terminate' class='waves-effect').
+                #[i(class='material-icons') delete_forever]
+                Terminate Account
+            a(href='/logout' class='waves-effect').
+                #[i(class='material-icons') close]
+                Logout
+    block dashboard

@@ -16,6 +16,8 @@ html, body {
 .extra-margin { margin: 5px; }
 .extra-padding { padding: 5px; }
 
+.margin-left { margin-left: 20px; }
+
 /*-+* MATERIALIZE OVERRIDES *+-*/
 
 nav {
@@ -26,6 +28,10 @@ nav {
 nav a { color: #222 !important; }
 .navbar-fixed { position: fixed; }
 .brand-logo { font-family: 'Pacifico', Calibri, sans-serif; }
+
+main {
+    padding-top: 72px;
+}
 
 .input-field input:focus + label { color: #1976D2 !important; }
 

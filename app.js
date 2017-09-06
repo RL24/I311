@@ -5,12 +5,22 @@ const bodyParser = require('body-parser')
 const http = require('http');
 const dotenv = require('dotenv').config();
 const validator = require('express-validator');
+const sha1 = require('sha1');
+const uuid = require('uuid-random');
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
+
+const adapter = new FileSync('db.json');
+const db = low(adapter);
 
 const app = express();
 
 const home = require('./routes/home');
 const auth = require('./routes/auth');
 const dash = require('./routes/dash');
+const contacts = require('./routes/contact');
+
+const user = require('./models/user');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -19,6 +29,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({secret: 'X'}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(validator());
+
+db.defaults({users: []}).write();
+
+app.use('*', (req, res, next) => {
+    req.low = low;
+    req.db = db;
+    req.sha1 = sha1;
+    req.uuid = uuid;
+    req.User = user;
+    next();
+});
 
 if (process.env.ENVIRONMENT === 'debug')
     app.get('*', (req, res, next) => {
@@ -29,6 +50,11 @@ if (process.env.ENVIRONMENT === 'debug')
 app.use('/', home);
 app.use('/', auth);
 app.use('/dashboard', dash);
+app.use('/contact', contacts);
+
+app.use('/', (req, res) => {
+    res.redirect('/');
+});
 
 var server = http.createServer(app);
 server.listen(process.env.PORT, () => {
