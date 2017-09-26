@@ -1,7 +1,8 @@
-function User(uid, email, contacts) {
+function User(uid, email, username, hiddenPosts) {
     this.uid = uid;
     this.email = email;
-    this.contacts = contacts;
+    this.username = username;
+    this.hiddenPosts = hiddenPosts;
 }
 
 module.exports = User;

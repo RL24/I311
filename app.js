@@ -7,6 +7,7 @@ const dotenv = require('dotenv').config();
 const validator = require('express-validator');
 const sha1 = require('sha1');
 const uuid = require('uuid-random');
+
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 
@@ -18,9 +19,11 @@ const app = express();
 const home = require('./routes/home');
 const auth = require('./routes/auth');
 const dash = require('./routes/dash');
-const contacts = require('./routes/contact');
+const posts = require('./routes/posts');
 
 const user = require('./models/user');
+
+const helper = require('./custom_modules/helper');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -30,7 +33,9 @@ app.use(session({secret: 'X'}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(validator());
 
-db.defaults({users: []}).write();
+db.defaults({users: [], posts: []}).write();
+
+helper.setDatabaseHelpers(db);
 
 app.use('*', (req, res, next) => {
     req.low = low;
@@ -38,6 +43,7 @@ app.use('*', (req, res, next) => {
     req.sha1 = sha1;
     req.uuid = uuid;
     req.User = user;
+    req.helper = helper;
     next();
 });
 
@@ -50,7 +56,7 @@ if (process.env.ENVIRONMENT === 'debug')
 app.use('/', home);
 app.use('/', auth);
 app.use('/dashboard', dash);
-app.use('/contact', contacts);
+app.use('/posts', posts);
 
 app.use('/', (req, res) => {
     res.redirect('/');

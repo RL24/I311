@@ -1,3 +1,98 @@
 {
-  "users": []
+  "users": [
+    {
+      "uid": "c3a5a9f4-bcc5-4691-9715-32cc36cf637d",
+      "email": "asiciar@gmail.com",
+      "username": "Asiciar",
+      "password": "b0d7ca645314b2ffeeaf6733df4feec821138832",
+      "hiddenPosts": [],
+      "lastLogin": "Tue Sep 26 2017 16:50:43 GMT+1300 (New Zealand Daylight Time)",
+      "salt": "faeef39dc9a7ce1c019355075c54446af3b48dd3",
+      "sid": "f11acce2a5e79f96996fdc912b5a8caf1ec52bf3"
+    },
+    {
+      "uid": "5eee7aae-79a7-4f27-9dc1-6a0a692c549f",
+      "email": "doubleparallax@gmail.com",
+      "username": "DoubleParallax",
+      "password": "3e476f79fafbb07ab26f5049e4b9324eeaad6dad",
+      "hiddenPosts": [],
+      "lastLogin": "Tue Sep 26 2017 21:54:22 GMT+1300 (New Zealand Daylight Time)",
+      "salt": "c6ad2021b6356f9cc2366717239e5d4f388c00a9",
+      "sid": "68ae9b986442f46cc363b42dd87c273c609d5e94"
+    }
+  ],
+  "posts": [
+    {
+      "uid": "8c651516-24c1-4821-bf21-af2eb960f1f3",
+      "author_uid": "c3a5a9f4-bcc5-4691-9715-32cc36cf637d",
+      "date": "23 September 2017",
+      "full_date": "Saturday, September 23rd, 2017, 07:33 AM",
+      "message": "Oh yeah? Shit, it's not private...",
+      "display": "private",
+      "comments": []
+    },
+    {
+      "uid": "90870ae7-5708-4fb3-a79b-9a7964f35345",
+      "author_uid": "c3a5a9f4-bcc5-4691-9715-32cc36cf637d",
+      "date": "23 September 2017",
+      "full_date": "Saturday, September 23rd, 2017, 07:34 AM",
+      "message": "Yay, it's private!!!",
+      "display": "public",
+      "comments": []
+    },
+    {
+      "uid": "dca93d2d-cccc-49be-a6da-d76bdf3005a7",
+      "author_uid": "5eee7aae-79a7-4f27-9dc1-6a0a692c549f",
+      "date": "25 September 2017",
+      "full_date": "Monday, September 25th, 2017, 07:24 PM",
+      "message": "Yeah, I know right!",
+      "display": "public",
+      "comments": []
+    },
+    {
+      "uid": "01bb147a-9919-47af-9a5a-7fddfb1a8441",
+      "author_uid": "5eee7aae-79a7-4f27-9dc1-6a0a692c549f",
+      "date": "25 September 2017",
+      "full_date": "Monday, September 25th, 2017, 07:25 PM",
+      "message": "This one's also private >;) mwahahahaha",
+      "display": "private",
+      "comments": []
+    },
+    {
+      "uid": "bfb7a8d6-d268-4d80-a7a2-1740809f0cc3",
+      "author_uid": "5eee7aae-79a7-4f27-9dc1-6a0a692c549f",
+      "date": "25 September 2017",
+      "full_date": "Monday, September 25th, 2017, 07:26 PM",
+      "message": "This is definitely on the way to being complete, just a few tweaks here and there and maybe some new features? I don't know yet, might just implement the already needed features on the left, but I'll see how much more I'll add.",
+      "display": "public",
+      "comments": []
+    },
+    {
+      "uid": "d62d6d1d-f905-4dad-840f-cbe72c27ab84",
+      "author_uid": "c3a5a9f4-bcc5-4691-9715-32cc36cf637d",
+      "date": "25 September 2017",
+      "full_date": "Monday, September 25th, 2017, 07:28 PM",
+      "message": "Yeah there's a few more features needed to be implemented, but no rush :)",
+      "display": "public",
+      "comments": []
+    },
+    {
+      "uid": "a582eb42-2b93-421b-9ab6-ed671bcf9ba4",
+      "author_uid": "c3a5a9f4-bcc5-4691-9715-32cc36cf637d",
+      "date": "25 September 2017",
+      "full_date": "Monday, September 25th, 2017, 07:28 PM",
+      "message": "the fucker needs to hurry up",
+      "display": "private",
+      "comments": []
+    },
+    {
+      "uid": "1bdbcf8c-8360-477c-9287-16e920cb31c7",
+      "author_uid": "5eee7aae-79a7-4f27-9dc1-6a0a692c549f",
+      "date": "25 September 2017",
+      "full_date": "Monday, September 25th, 2017, 10:19 PM",
+      "message": "Yeah you probably should have set that private hahhh....",
+      "display": "private",
+      "comments": []
+    }
+  ]
 }

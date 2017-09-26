@@ -1,29 +1,19 @@
 extends template
 
-block head_post
-    style(type='text/css').
-        header, main, footer {
-            padding-left: 300px;
-        }
-
-        @media only screen and (max-width: 992px) {
-            header, main, footer {
-                padding-left: 0;
-            }
-        }
-        
-
 block content
-    ul(class='side-nav fixed')
+    ul(id='navigation' class='side-nav right-aligned fixed')
         li
             div(class='user-view')
                 div(class='background')
-                    img(class='waves-effect responsive-img' src='/images/back.png')
-                a(href='#!user' class='circle waves-effect waves-light')
-                    img(class='circle' src='/images/user.png')
-                span(class='white-text') #{session.user.email}
+                    img(class='waves-effect responsive-img' src='/images/user_background.png')
+                a(href='#!user' class='circle waves-effect outlined-white')
+                    img(class='circle outlined' src='/images/avatar/' + session.user.uid + '.png')
+                span(class='white-text shadowed') Logged in as #{session.user.username}
                 br
         li
+            a(href='/account' class='waves-effect').
+                #[i(class='material-icons') account_circle]
+                Profile Settings
             a(href='/terminate' class='waves-effect').
                 #[i(class='material-icons') delete_forever]
                 Terminate Account

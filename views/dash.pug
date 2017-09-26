@@ -2,18 +2,47 @@ extends dashboard_template
 
 block dashboard
     div(class='container-fluid')
-        div(class='row')
-            each contact in session.user.contacts
-                div(class='col s6 m4 l3')
+        form(class='validate-form' method='POST')
+            div(class='row')
+                div(class='col s12 m8 l6 offset-m2 offset-l3')
                     div(class='card')
-                        div(class='card-image' style='position: relative;')
-                            img(src='/images/back.png')
-                            a(href='/contact/remove/' + contact.uid class='btn-floating btn-large halfway-fab waves-effect waves-light blue')
-                                i(class='material-icons') close
-                        div(class='card-content')
-                            span(class='card-title') #{contact.name}
-                            p.
-                                Email: #{contact.email}
-    div(class='fixed-action-btn')
-        a(class='btn-floating btn-large waves-effect waves-light blue' href='/contact/add')
-            i(class='material-icons') add
+                        div(class='row')
+                            ul(class='tabs')
+                                li(class='tab col s12') #[a(href='#status') Update Status]
+                        div(class='row no-margin-bottom')
+                            div(class='col s12')
+                                div(id='status')
+                                    div(class='row no-margin-bottom')
+                                        div(class='col s12')
+                                            div(class='input-field')
+                                                textarea(id='message' name='message' type='text' class='materialize-textarea')
+                                                label(for='message') What's on your mind?
+                        div(class='card-action')
+                            div(class='right')
+                                input(id='postDisplay-value' name='display' value='public' hidden)
+                                a(id='postDisplay-button' class='dropdown-button btn blue text-white darken-2 waves-effect' href='#!' data-activates='postDisplay' data-constrainWidth='true' data-beloworigin='true' data-alignment='right') Public
+                                ul(id='postDisplay' class='dropdown-content')
+                                    li #[a(onClick='postDisplay("postDisplay", "Public")') Public]
+                                    li #[a(onClick='postDisplay("postDisplay", "Private")') Private]
+                                button(class='btn blue darken-2 waves-effect extra-margin' type='submit') Post
+                            div(class='clearfix')
+        div(class='row')
+            each post in posts.reverse()
+                - var hidden = false
+                each uid in session.user.hiddenPosts
+                    if uid == post.uid
+                        - hidden = true
+                if post.display == 'private' && post.author_uid != session.user.uid
+                    - hidden = true
+                if !hidden
+                    - var post_author = authors[post.author_uid];
+                    if post_author != null
+                        udc-post(session-uid=session.user.uid uid=post.uid author-uid=post.author_uid author=post_author.username date=post.date full-date=post.full_date message=post.message display=post.display post-comments=post.comments)
+            - posts.reverse()
+            
+block scripts
+    script.
+        postDisplay = (id, text) => {
+            $(`#${id}-button`).html(text);
+            $(`#${id}-value`).val(text.toLowerCase());
+        };

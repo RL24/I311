@@ -1,4 +1,4 @@
-div(class='navbar-fixed')
+div(class='navbar')
     nav
-        div(class=(fluid_nav ? 'container-fluid margin-left nav-wrapper' : 'container nav-wrapper'))
-            a(href='/' class='brand-logo') ExpressJS
+        div(class='nav-wrapper container')
+            a(href='/' class='brand-logo') #{process.env.NAME}

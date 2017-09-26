@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 
 function XOR_hex(a, b) {
     var res = "";
@@ -21,25 +22,28 @@ exports.login_post = (req, res) => {
     if (req.session.user)
         res.redirect('back');
     else {
-        var dbo = req.db.get('users').find({
-            email: req.body.email
-        });
-        var user = dbo.value();
+        var login = req.body.login.toLowerCase();
+        var dboUser = req.db.get('users').findUser(login);
+        var user = dboUser.value();
 
-        if (user !== undefined) {
+        if (user != null) {
             var password = XOR_hex(req.body.password, user.salt);
             if (user.password == req.sha1(password)) {
                 var date = Date();
                 var salt = req.sha1(user.uid + date);
                 password = XOR_hex(req.body.password, salt);
 
-                dbo.assign({
+                dboUser.assign({
                     password: req.sha1(password),
                     lastLogin: date,
                     salt: salt
                 }).write();
-                req.session.user = new req.User(user.uid, user.email, user.contacts);
-                res.redirect('/');
+                req.session.user = new req.User(user.uid, user.email, user.username, user.hiddenPosts);
+
+                if (!fs.existsSync(`./public/images/avatar/${user.uid}.png`))
+                    req.helper.getAvatar(user.uid, req, res);
+                else
+                    res.redirect('/');
                 return;
             }
         }
@@ -66,8 +70,9 @@ exports.register_post = (req, res) => {
     req.db.get('users').push({
         uid: uuid,
         email: req.body.email,
+        username: req.body.username,
         password: req.sha1(password),
-        contacts: [],
+        hiddenPosts: [],
         lastLogin: date,
         salt: salt
     }).write();
@@ -90,9 +95,13 @@ exports.logout = (req, res) => {
 };
 
 exports.terminate = (req, res) => {
-    if (req.session.user)
+    if (req.session.user) {
         req.db.get('users').remove({
             uid: req.session.user.uid
         }).write();
+        req.db.get('posts').remove({
+            author_uid: req.session.user.uid
+        }).write();
+    }
     res.redirect('/logout');
 };

@@ -1,30 +1,38 @@
 extends template
 
 block content
+    div(class='preloader')
+        div(class='loader')
+            svg(class='circular' viewBox='25 25 50 50')
+                circle(class='path' cx='50' cy='50' r='20' fill='none' stroke-width='2' stroke-miterlimit='10')
     div(class='vouter')
         div(class='vinner')
             div(class='container')
                 div(class='row')
                     div(class='col s12 m6 offset-m3')
-                        form(class='validate-form' method='POST')
+                        form(id='frm-login' class='validate-form' method='POST')
                             div(class='card')
                                 div(class='card-content')
                                     span(class='card-title') #{title}
                                     div(class='input-field col s12')
-                                        i(class='material-icons prefix') email
-                                        input(id='email' name='email' type='email')
-                                        label(for='email') Email
+                                        i(class='material-icons prefix') account_circle
+                                        input(id='login' name='login' type='text')
+                                        label(for='login') Email/Username
                                     div(class='input-field col s12')
                                         i(class='material-icons prefix') lock
                                         input(id='password' name='password' type='password')
                                         label(for='password') Password
-                                    div(class='col s12 m12')
-                                        input(id='remember_me' type='checkbox')
-                                        label(for='remember_me') Remember me
-                                        a(class='waves-effect right extra-padding' href='/forgot_password') Forgot password?
                                     div(class='clearfix')
                                 div(class='card-action')
                                     div(class='right')
                                         a(class='btn-flat waves-effect extra-margin' href='/register') Register
                                         button(class='btn blue darken-2 waves-effect extra-margin' type='submit') Login
                                     div(class='clearfix')
+block scripts
+    script.
+        $('#frm-login').submit((e) => {
+            $('.preloader').css({
+                opacity: 1,
+                display: 'flex'
+            }, 100);
+        });
