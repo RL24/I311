@@ -10,9 +10,20 @@ const uuid = require('uuid-random');
 
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
-
 const adapter = new FileSync('db.json');
 const db = low(adapter);
+
+const mysql = require('mysql');
+var con = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'express'
+});
+
+con.connect((err) => {
+    if (err) throw "Error connecting to database. Make sure the database is online and able to be connected to.";
+});
 
 const app = express();
 
@@ -20,6 +31,7 @@ const home = require('./routes/home');
 const auth = require('./routes/auth');
 const dash = require('./routes/dash');
 const posts = require('./routes/posts');
+const api = require('./routes/api');
 
 const user = require('./models/user');
 
@@ -40,6 +52,9 @@ helper.setDatabaseHelpers(db);
 app.use('*', (req, res, next) => {
     req.low = low;
     req.db = db;
+
+    req.mysql = con;
+
     req.sha1 = sha1;
     req.uuid = uuid;
     req.User = user;
@@ -57,6 +72,7 @@ app.use('/', home);
 app.use('/', auth);
 app.use('/dashboard', dash);
 app.use('/posts', posts);
+app.use('/api', api);
 
 app.use('/', (req, res) => {
     res.redirect('/');

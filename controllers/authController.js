@@ -15,7 +15,10 @@ exports.index = (req, res) => {
 };
 
 exports.login = (req, res) => {
-    res.render('login', {title: 'Login'});
+    if (req.session.user)
+        res.redirect('/');
+    else
+        res.render('login', {title: 'Login'});
 };
 
 exports.login_post = (req, res) => {
@@ -26,7 +29,34 @@ exports.login_post = (req, res) => {
         var dboUser = req.db.get('users').findUser(login);
         var user = dboUser.value();
 
-        if (user != null) {
+        req.helper.getUserByEmailOrUsername(req.mysql, login, (user) => {
+            if (user != null) {
+                var password = req.sha1(XOR_hex(req.body.password, user.salt));
+                if (user.password == password) {
+                    var date = new Date();
+                    var salt = req.sha1(user.uid + date);
+                    password = req.sha1(XOR_hex(req.body.password, salt));
+
+                    req.helper.createOrUpdateUser(req.mysql, user.uid, user.email, user.username, password, date, salt, (result) => {
+                        if (result) {
+                            req.helper.getHiddenPostsByUserUid(req.mysql, user.uid, (hidden) => {
+                                req.session.user = new req.User(user.uid, user.email, user.username, hidden);
+                                if (!fs.existsSync(`./public/images/avatar/${user.uid}.png`)) {
+                                    req.helper.getAvatar(user.uid, req, res);
+                                    return;
+                                } else
+                                    res.redirect('/');
+                            });
+                        } else
+                            res.redirect('back');
+                    });
+                    return;
+                }
+            }
+            res.redirect('back');
+        });
+
+        /*if (user != null) {
             var password = XOR_hex(req.body.password, user.salt);
             if (user.password == req.sha1(password)) {
                 var date = Date();
@@ -47,16 +77,35 @@ exports.login_post = (req, res) => {
                 return;
             }
         }
-        res.redirect('back');
+        res.redirect('back');*/
     }
 };
 
 exports.register = (req, res) => {
-    res.render('register', {title: 'Register'});
+    if (req.session.user)
+        res.redirect('/');
+    else
+        res.render('register', {title: 'Register'});
 };
 
 exports.register_post = (req, res) => {
-    var exists = req.db.get('users').find({
+    var email = req.body.email;
+    var username = req.body.username;
+    var uuid = req.uuid();
+    var date = new Date();
+    var salt = req.sha1(uuid + date);
+    var password = req.sha1(XOR_hex(req.body.password, salt));
+
+    req.helper.getUserByEmailOrUsername(req.mysql, email, (user) => {
+        if (user != null)
+            res.redirect('back');
+        else
+            req.helper.createOrUpdateUser(req.mysql, uuid, email, username, password, date, salt, (result) => {
+                res.redirect('/');
+            });
+    });
+
+    /*var exists = req.db.get('users').find({
         email: req.body.email
     }).value();
     if (exists) {
@@ -77,7 +126,7 @@ exports.register_post = (req, res) => {
         salt: salt
     }).write();
 
-    res.redirect('/');
+    res.redirect('/');*/
 };
 
 exports.forgot_password = (req, res) => {
@@ -96,12 +145,20 @@ exports.logout = (req, res) => {
 
 exports.terminate = (req, res) => {
     if (req.session.user) {
-        req.db.get('users').remove({
+        var uid = req.session.user.uid;
+        req.helper.removeUser(req.mysql, uid, (result) => {});
+        req.helper.removePostsByAuthorUid(req.mysql, uid, (result) => {});
+        req.helper.removeCommentsByAuthorUid(req.mysql, uid, (result) => {});
+        req.helper.removeHiddenPostsByUserUid(req.mysql, uid, (result) => {});
+        /*req.db.get('users').remove({
             uid: req.session.user.uid
         }).write();
         req.db.get('posts').remove({
             author_uid: req.session.user.uid
         }).write();
+        req.db.get('posts').map('comments').remove({
+            author_uid: req.session.user.uid
+        }).write();*/
     }
     res.redirect('/logout');
 };

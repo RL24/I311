@@ -15,12 +15,12 @@ html
         root
             Clock
 
-        header
+        header(class=(has_side_bar ? 'has_side_bar' : ''))
             block header
             include navigation
-        main
+        main(class=(has_side_bar ? 'has_side_bar' : ''))
             block content
-        footer
+        footer(class=(has_side_bar ? 'has_side_bar' : ''))
             block footer
     
         script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js')
@@ -31,68 +31,74 @@ html
 
         script(type='text/javascript').
             $(document).ready(() => {
-                $('select').material_select();
-                $('.validate-form').validate({
-                    errorClass: 'invalid',
-                    errorPlacement: function(error, element) {
-                        $(element)
-                            .closest('form')
-                            .find(`label[for='${element.attr('id')}']`)
-                            .attr('data-error', error.text());
-                    },
-                    rules: {
-                        email: {
-                            required: true,
-                            email: true,
-                            maxlength: 64
+                setTimeout(() => {
+                    $('html, body').animate({scrollTop: $(window.location.hash).offset().top - window.innerHeight + $(window.location.hash).outerHeight(true) + 64}, 100);
+                    window.location.replace("#");
+                    
+                    $('select').material_select();
+                    $('.tooltipped').tooltip();
+                    $('.validate-form').validate({
+                        errorClass: 'invalid',
+                        errorPlacement: function(error, element) {
+                            $(element)
+                                .closest('form')
+                                .find(`label[for='${element.attr('id')}']`)
+                                .attr('data-error', error.text());
                         },
-                        username: {
-                            required: true,
-                            minlength: 3,
-                            maxlength: 16
+                        rules: {
+                            email: {
+                                required: true,
+                                email: true,
+                                maxlength: 64
+                            },
+                            username: {
+                                required: true,
+                                minlength: 3,
+                                maxlength: 16
+                            },
+                            login: {
+                                required: true,
+                                minlength: 3,
+                                maxlength: 64
+                            },
+                            password: {
+                                required: true,
+                                minlength: 4,
+                                maxlength: 64
+                            },
+                            password_confirm: {
+                                required: true,
+                                equalTo: '#password'
+                            }
                         },
-                        login: {
-                            required: true,
-                            minlength: 3,
-                            maxlength: 64
-                        },
-                        password: {
-                            required: true,
-                            minlength: 4,
-                            maxlength: 64
-                        },
-                        password_confirm: {
-                            required: true,
-                            equalTo: '#password'
+                        messages: {
+                            email: {
+                                required: 'Enter an Email address',
+                                email: 'Enter a valid Email address',
+                                maxlength: 'Email is too long, must be 64 characters or less'
+                            },
+                            username: {
+                                required: '',
+                                minlength: '',
+                                maxlength: ''
+                            },
+                            login: {
+                                required: 'Enter an Email address or username',
+                                minlength: 'Email/Username is too short, must be 3 or more characters',
+                                maxlength: 'Email/Username is too long, must be 64 characters or less'
+                            },
+                            password: {
+                                required: 'Enter a password',
+                                minlength: 'Password is too short, must be 4 or more characters',
+                                maxlength: 'Password is too long, must be 16 characters or less'
+                            },
+                            password_confirm: {
+                                required: 'Confirm your password',
+                                equalTo: 'Passwords do not match'
+                            }
                         }
-                    },
-                    messages: {
-                        email: {
-                            required: 'Enter an Email address',
-                            email: 'Enter a valid Email address',
-                            maxlength: 'Email is too long, must be 64 characters or less'
-                        },
-                        username: {
-                            required: '',
-                            minlength: '',
-                            maxlength: ''
-                        },
-                        login: {
-                            required: 'Enter an Email address or username',
-                            minlength: 'Email/Username is too short, must be 3 or more characters',
-                            maxlength: 'Email/Username is too long, must be 64 characters or less'
-                        },
-                        password: {
-                            required: 'Enter a password',
-                            minlength: 'Password is too short, must be 4 or more characters',
-                            maxlength: 'Password is too long, must be 16 characters or less'
-                        },
-                        password_confirm: {
-                            required: 'Confirm your password',
-                            equalTo: 'Passwords do not match'
-                        }
-                    }
-                });
+                    });
+                }, 500)
             });
 
         block scripts

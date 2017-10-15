@@ -1,97 +1,143 @@
 {
   "users": [
     {
-      "uid": "c3a5a9f4-bcc5-4691-9715-32cc36cf637d",
-      "email": "asiciar@gmail.com",
-      "username": "Asiciar",
-      "password": "b0d7ca645314b2ffeeaf6733df4feec821138832",
+      "uid": "02fa952e-3a66-42cd-a947-076262290f63",
+      "email": "bob@gmail.com",
+      "username": "Bob",
+      "password": "42ac082dfd70735be452b96677555fd983162862",
       "hiddenPosts": [],
-      "lastLogin": "Tue Sep 26 2017 16:50:43 GMT+1300 (New Zealand Daylight Time)",
-      "salt": "faeef39dc9a7ce1c019355075c54446af3b48dd3",
-      "sid": "f11acce2a5e79f96996fdc912b5a8caf1ec52bf3"
+      "lastLogin": "Fri Sep 29 2017 16:17:36 GMT+1300 (New Zealand Daylight Time)",
+      "salt": "10cf31e00fc5c9ac7538538c8b39d939373bbef2"
     },
     {
-      "uid": "5eee7aae-79a7-4f27-9dc1-6a0a692c549f",
+      "uid": "383ccb57-a05a-4f0e-ab0b-a2393df2aef7",
+      "email": "jenny@gmail.com",
+      "username": "Jenny",
+      "password": "397b0f84e11b387e289793b26c88364f5f567271",
+      "hiddenPosts": [],
+      "lastLogin": "Fri Sep 29 2017 08:24:27 GMT+1300 (New Zealand Daylight Time)",
+      "salt": "ef93dadb68edab6016e277a545f0f78d5dfda9a3"
+    },
+    {
+      "uid": "7cb4ba3e-217b-4e45-b7ba-7d49b72bf012",
+      "email": "fred@gmail.com",
+      "username": "Fred",
+      "password": "afc22e9ff9923f322d32bb744d8e392c39d8378c",
+      "hiddenPosts": [],
+      "lastLogin": "Fri Sep 29 2017 08:25:17 GMT+1300 (New Zealand Daylight Time)",
+      "salt": "18323a1eb46a9cc01fa2328f459362a90c205819"
+    },
+    {
+      "uid": "ebef8514-7c85-467d-bf18-94ea57fb5b1d",
       "email": "doubleparallax@gmail.com",
       "username": "DoubleParallax",
-      "password": "3e476f79fafbb07ab26f5049e4b9324eeaad6dad",
+      "password": "0ab3546fcdf3cdbe87698bc38d5a2c75dae9635b",
       "hiddenPosts": [],
-      "lastLogin": "Tue Sep 26 2017 21:54:22 GMT+1300 (New Zealand Daylight Time)",
-      "salt": "c6ad2021b6356f9cc2366717239e5d4f388c00a9",
-      "sid": "68ae9b986442f46cc363b42dd87c273c609d5e94"
+      "lastLogin": "Fri Oct 06 2017 09:31:31 GMT+1300 (New Zealand Daylight Time)",
+      "salt": "6f57a97f2c40f7c545225a5d3c2d61144b93e20e"
     }
   ],
   "posts": [
     {
-      "uid": "8c651516-24c1-4821-bf21-af2eb960f1f3",
-      "author_uid": "c3a5a9f4-bcc5-4691-9715-32cc36cf637d",
-      "date": "23 September 2017",
-      "full_date": "Saturday, September 23rd, 2017, 07:33 AM",
-      "message": "Oh yeah? Shit, it's not private...",
-      "display": "private",
-      "comments": []
+      "uid": "83811225-39df-4630-9003-ff37f338189d",
+      "author_uid": "02fa952e-3a66-42cd-a947-076262290f63",
+      "date": "29 September 2017",
+      "full_date": "Friday, September 29th, 2017, 08:26 AM",
+      "message": "Hi, my name is Bob. I am the founder of this website. Please give me your opinion below!",
+      "display": "public",
+      "comments": [
+        {
+          "uid": "f1d6f3d0-9379-4ba3-9088-1e2c0f113b33",
+          "author_uid": "383ccb57-a05a-4f0e-ab0b-a2393df2aef7",
+          "author": "Jenny",
+          "author_avatar": "/images/avatar/383ccb57-a05a-4f0e-ab0b-a2393df2aef7.png",
+          "date": "29 September 2017",
+          "full_date": "Friday, September 29th, 2017, 08:26 AM",
+          "comment": "Hi Bob, I'm Jenny. This website reminds me of Facebook!"
+        },
+        {
+          "uid": "825b66f7-54aa-40df-9753-f01a258fbfef",
+          "author_uid": "02fa952e-3a66-42cd-a947-076262290f63",
+          "author": "Bob",
+          "author_avatar": "/images/avatar/02fa952e-3a66-42cd-a947-076262290f63.png",
+          "date": "29 September 2017",
+          "full_date": "Friday, September 29th, 2017, 08:28 AM",
+          "comment": "Hi Jenny. Yes, it is supposed to feel like Facebook. It's in early stages but will hope to have more features in the future!"
+        },
+        {
+          "uid": "618caf96-4017-482c-9bba-82fa14f07ca5",
+          "author_uid": "7cb4ba3e-217b-4e45-b7ba-7d49b72bf012",
+          "author": "Fred",
+          "author_avatar": "/images/avatar/7cb4ba3e-217b-4e45-b7ba-7d49b72bf012.png",
+          "date": "29 September 2017",
+          "full_date": "Friday, September 29th, 2017, 08:28 AM",
+          "comment": "That sounds exciting! Can't wait to see what's in store for this! :D"
+        }
+      ]
     },
     {
-      "uid": "90870ae7-5708-4fb3-a79b-9a7964f35345",
-      "author_uid": "c3a5a9f4-bcc5-4691-9715-32cc36cf637d",
-      "date": "23 September 2017",
-      "full_date": "Saturday, September 23rd, 2017, 07:34 AM",
-      "message": "Yay, it's private!!!",
+      "uid": "694f64c6-9160-44f3-834d-63d9efaef208",
+      "author_uid": "7cb4ba3e-217b-4e45-b7ba-7d49b72bf012",
+      "date": "29 September 2017",
+      "full_date": "Friday, September 29th, 2017, 08:27 AM",
+      "message": "Reminder to self: Buy bread on the way home tonight",
+      "display": "private",
+      "comments": [
+        {
+          "uid": "dd0771a9-4bd4-4c4a-994b-58d7aa28e7cd",
+          "author_uid": "7cb4ba3e-217b-4e45-b7ba-7d49b72bf012",
+          "author": "Fred",
+          "author_avatar": "/images/avatar/7cb4ba3e-217b-4e45-b7ba-7d49b72bf012.png",
+          "date": "29 September 2017",
+          "full_date": "Friday, September 29th, 2017, 08:27 AM",
+          "comment": "Oh and don't forget milk too!"
+        }
+      ]
+    },
+    {
+      "uid": "1d52b22f-f933-47de-bea8-89a0e1a3a0f6",
+      "author_uid": "7cb4ba3e-217b-4e45-b7ba-7d49b72bf012",
+      "date": "29 September 2017",
+      "full_date": "Friday, September 29th, 2017, 08:29 AM",
+      "message": "Hi guys, I'm Fred, I like to eat food and sleep",
+      "display": "public",
+      "comments": [
+        {
+          "uid": "5f1a34bb-7687-44ee-b69d-6123a1e88cea",
+          "author_uid": "02fa952e-3a66-42cd-a947-076262290f63",
+          "author": "Bob",
+          "author_avatar": "/images/avatar/02fa952e-3a66-42cd-a947-076262290f63.png",
+          "date": "29 September 2017",
+          "full_date": "Friday, September 29th, 2017, 08:29 AM",
+          "comment": "Hi Fred!"
+        },
+        {
+          "uid": "a16ce3de-80a3-4360-a992-12ecf2bab145",
+          "author_uid": "383ccb57-a05a-4f0e-ab0b-a2393df2aef7",
+          "author": "Jenny",
+          "author_avatar": "/images/avatar/383ccb57-a05a-4f0e-ab0b-a2393df2aef7.png",
+          "date": "29 September 2017",
+          "full_date": "Friday, September 29th, 2017, 08:29 AM",
+          "comment": "Hey :D"
+        }
+      ]
+    },
+    {
+      "uid": "47816b3c-85a8-4ba6-b3e5-9df0c2538d20",
+      "author_uid": "b456e407-c7f8-42fa-8733-7272668c33d6",
+      "date": "10 October 2017",
+      "full_date": "Tuesday, October 10th, 2017, 10:03 PM",
+      "message": "dasdasd",
       "display": "public",
       "comments": []
     },
     {
-      "uid": "dca93d2d-cccc-49be-a6da-d76bdf3005a7",
-      "author_uid": "5eee7aae-79a7-4f27-9dc1-6a0a692c549f",
-      "date": "25 September 2017",
-      "full_date": "Monday, September 25th, 2017, 07:24 PM",
-      "message": "Yeah, I know right!",
+      "uid": "1331434e-a1f9-48c5-b42c-bfbadbbb8e00",
+      "author_uid": "b456e407-c7f8-42fa-8733-7272668c33d6",
+      "date": "10 October 2017",
+      "full_date": "Tuesday, October 10th, 2017, 10:03 PM",
+      "message": "asdasdhk",
       "display": "public",
-      "comments": []
-    },
-    {
-      "uid": "01bb147a-9919-47af-9a5a-7fddfb1a8441",
-      "author_uid": "5eee7aae-79a7-4f27-9dc1-6a0a692c549f",
-      "date": "25 September 2017",
-      "full_date": "Monday, September 25th, 2017, 07:25 PM",
-      "message": "This one's also private >;) mwahahahaha",
-      "display": "private",
-      "comments": []
-    },
-    {
-      "uid": "bfb7a8d6-d268-4d80-a7a2-1740809f0cc3",
-      "author_uid": "5eee7aae-79a7-4f27-9dc1-6a0a692c549f",
-      "date": "25 September 2017",
-      "full_date": "Monday, September 25th, 2017, 07:26 PM",
-      "message": "This is definitely on the way to being complete, just a few tweaks here and there and maybe some new features? I don't know yet, might just implement the already needed features on the left, but I'll see how much more I'll add.",
-      "display": "public",
-      "comments": []
-    },
-    {
-      "uid": "d62d6d1d-f905-4dad-840f-cbe72c27ab84",
-      "author_uid": "c3a5a9f4-bcc5-4691-9715-32cc36cf637d",
-      "date": "25 September 2017",
-      "full_date": "Monday, September 25th, 2017, 07:28 PM",
-      "message": "Yeah there's a few more features needed to be implemented, but no rush :)",
-      "display": "public",
-      "comments": []
-    },
-    {
-      "uid": "a582eb42-2b93-421b-9ab6-ed671bcf9ba4",
-      "author_uid": "c3a5a9f4-bcc5-4691-9715-32cc36cf637d",
-      "date": "25 September 2017",
-      "full_date": "Monday, September 25th, 2017, 07:28 PM",
-      "message": "the fucker needs to hurry up",
-      "display": "private",
-      "comments": []
-    },
-    {
-      "uid": "1bdbcf8c-8360-477c-9287-16e920cb31c7",
-      "author_uid": "5eee7aae-79a7-4f27-9dc1-6a0a692c549f",
-      "date": "25 September 2017",
-      "full_date": "Monday, September 25th, 2017, 10:19 PM",
-      "message": "Yeah you probably should have set that private hahhh....",
-      "display": "private",
       "comments": []
     }
   ]

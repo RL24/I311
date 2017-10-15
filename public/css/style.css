@@ -4,7 +4,7 @@ html, body {
     padding: 0;
 }
 
-.vouter { height: 100%; }
+.vouter { height: calc(100% - 84px); }
 
 .vinner {
     position: relative;
@@ -14,9 +14,12 @@ html, body {
 
 .max-width { width: 100%; }
 .extra-margin { margin: 5px; }
+.extra-margin-top { margin-top: 30px; }
 .extra-padding { padding: 5px; }
 .margin-left { margin-left: 20px; }
 .no-margin-bottom { margin-bottom: 0; }
+.no-padding-hor { padding-left: 0 !important; padding-right: 0 !important; }
+.no-bottom-border { border-bottom: none !important; }
 
 #postDisplay-button {
     padding: 0 30px;
@@ -132,12 +135,12 @@ ul.dropdown-content li a { color: #1976D2; }
 
 a#postDisplay-button, a:hover#postDisplay-button, a:active#postDisplay-button { color: white !important; }
 
-header, main, footer {
-    width: calc(100% - 300px);
+header.has_side_bar, main.has_side_bar, footer.has_side_bar {
+    width: calc(100% - 300px) !important;
 }
 
 @media screen and (max-width: 992px) {
-    header, main, footer {
-        width: 100%;
+    header.has_side_bar, main.has_side_bar, footer.has_side_bar {
+        width: 100% !important;
     }
 }
