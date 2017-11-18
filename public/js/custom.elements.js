@@ -61,7 +61,7 @@ class Post extends HTMLElement {
                                             </div>
                                             <div>
                                                 <p class='grey-text text-darken-4'>${this._author}</p>
-                                                <a href='#!' class='tooltipped' data-position='bottom' data-delay='50' data-tooltip='${this._full_date}'><span class='grey-text text-darken-1 ultra-small'>Shared - ${date_render}</span></a>
+                                                <a href='#!' class='tooltipped' data-position='bottom' data-delay='50' data-tooltip='${this._full_date}'><span class='grey-text text-darken-1 ultra-small'>${this._display.charAt(0).toUpperCase() + this._display.slice(1)} - Shared ${date_render}</span></a>
                                             </div>
                                         </div>
                                         <div class='col s1 right-align'>
@@ -88,29 +88,9 @@ class Post extends HTMLElement {
 
             if (comments.length > 0) {
                 content+= `<ul id='${this._uid}-comments' class='collection'>`;
-                for (var i = 0; i < comments.length; i++) {
-                    content+= `
-                            <li id='${this._uid}-${comments[i].uid}' class='collection-item no-bottom-border avatar'>
-                            </li>
-                    `
-                    $.post(`/api/user/${comments[i].author_uid}`, (response2) => {
-                        i = i - 1;
-
-                        var user = JSON.parse(response2);
-
-                        var commentContent = '';
-                        commentContent+= `
-                                <img src='/images/avatar/${user.uid}.png' class='circle outlined'>
-                                <span class='title'>${user.username}</span>
-                                <p>
-                                    ${comments[i].message}
-                                    <br>
-                                    <small><a href='#!' class='tooltipped' data-position='bottom' data-delay='50' data-tooltip='${comments[i].full_date}'><span class='grey-text text-darken-1 ultra-small'>${comments[i].date}</span></a></small>
-                                </p>
-                        `;
-                        $(`#${this._uid}-${comments[i].uid}`).html(commentContent);
-                    });
-                }
+                comments.forEach((comment, ind, arr) => {
+                    content+= `<udc-comment uid='${comment.uid}' author-uid='${comment.author_uid}' author-name='${comment.author_name}' post-uid='${comment.post_uid}' date='${comment.date}' full-date='${comment.full_date}' message='${comment.message}' created='${comment.created}'>${comment.message}</udc-comment>`;
+                });
                 content+= `</ul>`;
             }
 
@@ -119,7 +99,7 @@ class Post extends HTMLElement {
                                 </div>
                                 <div class='col s12 no-padding-hor'>
                                     <form action='/posts/${this._uid}/comments/add' method='POST'>
-                                        <div class='input-field col s10'>
+                                        <div class='input-field col s12'>
                                             <input id='${this._uid}-message' name='message' type='text' class='no-margin-bottom'>
                                             <label for='message'>Write a comment</label>
                                         </div>
@@ -136,4 +116,80 @@ class Post extends HTMLElement {
     }
 }
 
+class Comment extends HTMLElement {
+    constructor() {
+        super();
+    }
+
+    static get observedAttributes() {
+        return ['uid', 'author-uid', 'author-name', 'post-uid', 'date', 'full-date', 'created'];
+    }
+
+    attributeChangedCallback(name, _old, _new) {
+        switch(name) {
+            case 'uid': this._uid = _new; break;
+            case 'author-uid': this._author_uid = _new; break;
+            case 'author-name': this._author_name = _new; break;
+            case 'post-uid': this._post_uid = _new; break;
+            case 'date': this._date = _new; break;
+            case 'full-date': this._full_date = _new; break;
+            case 'created': this._created = _new; break;
+        }
+    }
+
+    connectedCallback() {
+        this._updateRendering();
+    }
+
+    _updateRendering() {
+        var content = `
+            <li id='${this._post_uid}-${this._uid}' class='collection-item no-bottom-border avatar'>
+                <img src='/images/avatar/${this._author_uid}.png' class='circle outlined'>
+                <span class='title'>${this._author_name}</span>
+                <p>
+                    ${this.innerHTML}
+                    <br>
+                    <small><a href='#!' class='tooltipped' data-position='bottom' data-delay='50' data-tooltip='${this._full_date}'><span class='grey-text text-darken-1 ultra-small'>${this._date}</span></a></small>
+                </p>
+            </li>
+        `;
+        this.innerHTML = content;
+    }
+}
+
+class ErrorMessage extends HTMLElement {
+    constructor() {
+        super();
+    }
+
+    static get observedAttributes() {
+        return ['error'];
+    }
+
+    attributeChangedCallback(name, _old, _new) {
+        switch(name) {
+            case 'error': this._error = _new; break;
+        }
+        setTimeout(() => {
+            $(this).hide();
+        }, 5000);
+    }
+
+    connectedCallback() {
+        this._updateRendering();
+    }
+
+    _updateRendering() {
+        var content = '';
+        content+= `
+            <div class='toast'>
+                <span>${this._error}</span>
+            </div>
+        `;
+        this.innerHTML = content;
+    }
+}
+
 customElements.define('udc-post', Post);
+customElements.define('udc-comment', Comment);
+customElements.define('udc-error', ErrorMessage);

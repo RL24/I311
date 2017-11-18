@@ -59,6 +59,14 @@ app.use('*', (req, res, next) => {
     req.uuid = uuid;
     req.User = user;
     req.helper = helper;
+
+    if (req.session.errors == null)
+        req.session.errors = [];
+    res.locals = {
+        errors: req.session.errors
+    };
+    req.session.errors = [];
+
     next();
 });
 
@@ -75,7 +83,8 @@ app.use('/posts', posts);
 app.use('/api', api);
 
 app.use('/', (req, res) => {
-    res.redirect('/');
+    req.session.errors.push('You\'re not logged in');
+    res.redirect('/login');
 });
 
 var server = http.createServer(app);

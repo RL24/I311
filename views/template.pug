@@ -12,9 +12,10 @@ html
     
         block head_post
     body
-        root
-            Clock
-
+        div(class='container')
+            div(class='toast-container padding-top fixed')
+                each error in errors
+                    udc-error(error=error)
         header(class=(has_side_bar ? 'has_side_bar' : ''))
             block header
             include navigation
@@ -32,9 +33,6 @@ html
         script(type='text/javascript').
             $(document).ready(() => {
                 setTimeout(() => {
-                    $('html, body').animate({scrollTop: $(window.location.hash).offset().top - window.innerHeight + $(window.location.hash).outerHeight(true) + 64}, 100);
-                    window.location.replace("#");
-                    
                     $('select').material_select();
                     $('.tooltipped').tooltip();
                     $('.validate-form').validate({
@@ -98,6 +96,10 @@ html
                             }
                         }
                     });
+                    if (window.location.hash != '#!') {
+                        $('html, body').animate({scrollTop: $(window.location.hash).offset().top - window.innerHeight + $(window.location.hash).outerHeight(true) + 64}, 100);
+                        window.location.replace('#');
+                    }
                 }, 500)
             });
 

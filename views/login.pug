@@ -26,13 +26,14 @@ block content
                                 div(class='card-action')
                                     div(class='right')
                                         a(class='btn-flat waves-effect extra-margin' href='/register') Register
-                                        button(class='btn blue darken-2 waves-effect extra-margin' type='submit') Login
+                                        button(id='login-help' class='btn blue darken-2 waves-effect extra-margin' type='submit') Login
                                     div(class='clearfix')
 block scripts
     script.
         $('#frm-login').submit((e) => {
-            $('.preloader').css({
-                opacity: 1,
-                display: 'flex'
-            }, 100);
+            if ($('#frm-login').valid())
+                $('.preloader').css({
+                    opacity: 1,
+                    display: 'flex'
+                }, 100);
         });

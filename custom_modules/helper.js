@@ -203,18 +203,18 @@ exports.getCommentsByAuthorUid = (mysql, author_uid, callback) => {
     });
 };
 
-exports.createOrUpdateComment = (mysql, uid, author_uid, post_uid, date, message, callback) => {
+exports.createOrUpdateComment = (mysql, uid, author_uid, author_name, post_uid, date, message, callback) => {
     var created = date.getTime();
     var full_date = dateformat(date, 'dddd, mmmm dS, yyyy, hh:MM TT');
     date = dateformat(date, 'd mmmm yyyy');
     module.exports.getCommentByUid(mysql, post_uid, uid, (comment) => {
         if (comment != null)
-            mysql.query(`UPDATE comment SET author_uid = ?, post_uid = ?, date = ?, full_date = ?, message = ? WHERE uid = ?`, [author_uid, post_uid, date, full_date, message, uid], (err, rows, fields) => {
+            mysql.query(`UPDATE comment SET author_uid = ?, author_name = ?, post_uid = ?, date = ?, full_date = ?, message = ? WHERE uid = ?`, [author_uid, author_name, post_uid, date, full_date, message, uid], (err, rows, fields) => {
                 if (err) throw err;
                 callback(true);
             });
         else
-            mysql.query(`INSERT INTO comment VALUES (?, ?, ?, ?, ?, ?, ?)`, [uid, author_uid, post_uid, date, full_date, message, created], (err, rows, fields) => {
+            mysql.query(`INSERT INTO comment VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, [uid, author_uid, author_name, post_uid, date, full_date, message, created], (err, rows, fields) => {
                 if (err) throw err;
                 callback(false);
             });

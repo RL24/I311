@@ -24,7 +24,7 @@ block dashboard
                                 ul(id='postDisplay' class='dropdown-content')
                                     li #[a(onClick='postDisplay("postDisplay", "Public")') Public]
                                     li #[a(onClick='postDisplay("postDisplay", "Private")') Private]
-                                button(class='btn blue darken-2 waves-effect extra-margin' type='submit') Post
+                                button(id='submit' class='btn blue darken-2 waves-effect extra-margin' type='submit') Post
                             div(class='clearfix')
         div(class='row')
             each post in posts

@@ -18,38 +18,19 @@ exports.index = (req, res) => {
                 });
             });
         });
-
-        /*var dboAuthors = req.db.get('users').value();
-        var authors = [];
-        dboAuthors.forEach((item, index, arr) => {
-            authors[item.uid] = item;
-        });
-        res.render('dash', {
-            title: 'Dashboard',
-            has_side_bar: true,
-            session: req.session,
-            posts: req.db.get('posts').value(),
-            authors: authors
-        });*/
-    } else
-        res.redirect('/');
+    }  else {
+        req.session.errors.push('You\'re not logged in');
+        res.redirect('/login');
+    }
 };
 
 exports.create_post = (req, res) => {
     if (req.session.user) {
         req.helper.createOrUpdatePost(req.mysql, req.uuid(), req.session.user.uid, new Date(), req.body.message, req.body.display, (result) => {
-            res.redirect('/');
+            res.redirect('/dashboard');
         });
-
-        /*req.db.get('posts').push({
-            uid: req.uuid(),
-            author_uid: req.session.user.uid,
-            date: dateformat(Date(), 'd mmmm yyyy'),
-            full_date: dateformat(Date(), 'dddd, mmmm dS, yyyy, hh:MM TT'),
-            message: req.body.message,
-            display: req.body.display,
-            comments: []
-        }).write();*/
+    } else {
+        req.session.errors.push('You\'re not logged in');
+        res.redirect('/login');
     }
-    //res.redirect('/');
 };

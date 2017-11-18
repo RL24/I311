@@ -15,16 +15,18 @@ exports.index = (req, res) => {
 };
 
 exports.login = (req, res) => {
-    if (req.session.user)
-        res.redirect('/');
-    else
+    if (req.session.user) {
+        req.session.errors.push('You\'re already logged in');
+        res.redirect('/dashboard');
+    } else
         res.render('login', {title: 'Login'});
 };
 
 exports.login_post = (req, res) => {
-    if (req.session.user)
-        res.redirect('back');
-    else {
+    if (req.session.user) {
+        req.session.errors.push('You\'re already logged in');
+        res.redirect('/dashboard');
+    } else {
         var login = req.body.login.toLowerCase();
         var dboUser = req.db.get('users').findUser(login);
         var user = dboUser.value();
@@ -47,100 +49,58 @@ exports.login_post = (req, res) => {
                                 } else
                                     res.redirect('/');
                             });
-                        } else
+                        } else {
+                            req.session.errors.push('There was an issue logging in, please try again');
                             res.redirect('back');
+                        }
                     });
                     return;
                 }
             }
+            req.session.errors.push('Invalid username or password');
             res.redirect('back');
         });
-
-        /*if (user != null) {
-            var password = XOR_hex(req.body.password, user.salt);
-            if (user.password == req.sha1(password)) {
-                var date = Date();
-                var salt = req.sha1(user.uid + date);
-                password = XOR_hex(req.body.password, salt);
-
-                dboUser.assign({
-                    password: req.sha1(password),
-                    lastLogin: date,
-                    salt: salt
-                }).write();
-                req.session.user = new req.User(user.uid, user.email, user.username, user.hiddenPosts);
-
-                if (!fs.existsSync(`./public/images/avatar/${user.uid}.png`))
-                    req.helper.getAvatar(user.uid, req, res);
-                else
-                    res.redirect('/');
-                return;
-            }
-        }
-        res.redirect('back');*/
     }
 };
 
 exports.register = (req, res) => {
-    if (req.session.user)
-        res.redirect('/');
-    else
+    if (req.session.user) {
+        req.session.errors.push('You\'re already logged in');
+        res.redirect('/dashboard');
+    } else
         res.render('register', {title: 'Register'});
 };
 
 exports.register_post = (req, res) => {
-    var email = req.body.email;
-    var username = req.body.username;
-    var uuid = req.uuid();
-    var date = new Date();
-    var salt = req.sha1(uuid + date);
-    var password = req.sha1(XOR_hex(req.body.password, salt));
+    if (req.session.user) {
+        req.session.errors.push('You\'re already logged in');
+        res.redirect('/dashboard');
+    } else {
+        var email = req.body.email;
+        var username = req.body.username;
+        var uuid = req.uuid();
+        var date = new Date();
+        var salt = req.sha1(uuid + date);
+        var password = req.sha1(XOR_hex(req.body.password, salt));
 
-    req.helper.getUserByEmailOrUsername(req.mysql, email, (user) => {
-        if (user != null)
-            res.redirect('back');
-        else
-            req.helper.createOrUpdateUser(req.mysql, uuid, email, username, password, date, salt, (result) => {
-                res.redirect('/');
-            });
-    });
-
-    /*var exists = req.db.get('users').find({
-        email: req.body.email
-    }).value();
-    if (exists) {
-        res.redirect('back');
-        return;
+        req.helper.getUserByEmailOrUsername(req.mysql, email, (user) => {
+            if (user != null) {
+                req.session.errors.push('There is already an account with that email or username');
+                res.redirect('back');
+            } else
+                req.helper.createOrUpdateUser(req.mysql, uuid, email, username, password, date, salt, (result) => {
+                    req.session.errors.push('Account created');
+                    res.redirect('/login');
+                });
+        });
     }
-    var date = Date();
-    var uuid = req.uuid();
-    var salt = req.sha1(uuid + date);
-    var password = XOR_hex(req.body.password, salt);
-    req.db.get('users').push({
-        uid: uuid,
-        email: req.body.email,
-        username: req.body.username,
-        password: req.sha1(password),
-        hiddenPosts: [],
-        lastLogin: date,
-        salt: salt
-    }).write();
-
-    res.redirect('/');*/
-};
-
-exports.forgot_password = (req, res) => {
-    res.render('forgot_password', {title: 'Forgot Password'});
-};
-
-exports.forgot_password_post = (req, res) => {
-    res.redirect('/');
 };
 
 exports.logout = (req, res) => {
     if (req.session.user)
         delete req.session.user;
-    res.redirect('/');
+    req.session.errors.push('Logged out');
+    res.redirect('/login');
 };
 
 exports.terminate = (req, res) => {
@@ -150,15 +110,8 @@ exports.terminate = (req, res) => {
         req.helper.removePostsByAuthorUid(req.mysql, uid, (result) => {});
         req.helper.removeCommentsByAuthorUid(req.mysql, uid, (result) => {});
         req.helper.removeHiddenPostsByUserUid(req.mysql, uid, (result) => {});
-        /*req.db.get('users').remove({
-            uid: req.session.user.uid
-        }).write();
-        req.db.get('posts').remove({
-            author_uid: req.session.user.uid
-        }).write();
-        req.db.get('posts').map('comments').remove({
-            author_uid: req.session.user.uid
-        }).write();*/
+        req.session.errors.push('Account terminated');
+        delete req.session.user;
     }
-    res.redirect('/logout');
+    res.redirect('/login');
 };

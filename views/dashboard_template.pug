@@ -11,16 +11,13 @@ block content
                 span(class='white-text shadowed') Logged in as #{session.user.username}
                 br
         li
-            a(href='/account' class='waves-effect').
-                #[i(class='material-icons') account_circle]
-                Profile Settings
-            a(href='/posts/hidden/clear' class='waves-effect').
+            a(id='clearhidden' href='/posts/hidden/clear' class='waves-effect').
                 #[i(class='material-icons') cached]
                 Clear Hidden Posts
-            a(href='/terminate' class='waves-effect').
+            a(id='terminate' href='/terminate' class='waves-effect').
                 #[i(class='material-icons') delete_forever]
                 Terminate Account
-            a(href='/logout' class='waves-effect').
+            a(id='logout' href='/logout' class='waves-effect').
                 #[i(class='material-icons') close]
                 Logout
     block dashboard

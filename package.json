@@ -1,0 +1,44 @@
+{
+  "name": "express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "dateformat": "^2.0.0",
+    "db": "^1.0.6",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.4",
+    "express-session": "^1.15.5",
+    "express-validator": "^4.0.0",
+    "firebase": "^4.3.1",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.0",
+    "js-cookie": "^2.1.4",
+    "lowdb": "^1.0.0",
+    "mongoose": "^4.11.9",
+    "mysql": "^2.14.1",
+    "mysql-model": "^0.0.2",
+    "node-hwid": "^0.1.0",
+    "node-machine-id": "^1.1.9",
+    "nodejs-model": "^0.1.6",
+    "pug": "^2.0.0-rc.3",
+    "request": "^2.82.0",
+    "sha1": "^1.1.1",
+    "uuid-random": "^1.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RL24/I311.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RL24/I311/issues"
+  },
+  "homepage": "https://github.com/RL24/I311#readme"
+}

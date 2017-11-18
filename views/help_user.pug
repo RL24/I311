@@ -1,0 +1,77 @@
+extends template
+
+block content
+    div(class='container')
+        div(class='row')
+            div(class='col s12 m10 l8 offset-m1 offset-l2')
+                div(class='card')
+                    div(class='card-content')
+                        span(class='card-title center')= title
+        div(class='row')
+            div(class='col s12 m10 l8 offset-m1 offset-l2')
+                div(class='card')
+                    div(class='card-content')
+                        span(class='card-title') Authentication
+                    div(class='card-action')
+                        p.
+                            To be authenticated, head over to the #[kbd #[a(class='link' href='/register') register]] 
+                            page, fill out the required fields, and click #[kbd #[a(class='link' href='/register#register') register]] to register an account. After your account has been created, head over to the 
+                            #[kbd #[a(class='link' href='/login') login]] page and log in.
+                        p.
+                            To sign out of your account, once on the dashboard, simply click the #[kbd #[a(class='link' href='/dashboard#logout') logout]] button.
+        div(class='row')
+            div(class='col s12 m10 l8 offset-m1 offset-l2')
+                div(class='card')
+                    div(class='card-content')
+                        span(class='card-title') Creating Posts
+                    div(class='card-action')
+                        p.
+                            To create a new post, fill out the #[kbd #[a(class='link' href='/dashboard#message') message]] 
+                            text field, and click the #[kbd #[a(class='link' href='/dashboard#submit') submit]] button. 
+                            You can optionally click the #[kbd #[a(class='link' href='/dashboard#postDisplay-button') public]] 
+                            button to change the posts visibility
+        div(class='row')
+            div(class='col s12 m10 l8 offset-m1 offset-l2')
+                div(class='card')
+                    div(class='card-content')
+                        span(class='card-title') Post Visibility
+                    div(class='card-action')
+                        p.
+                            To hide an existing post, click the arrow at the top right of each post. 
+                            You will be presented with a drop down box. Click the #[kbd #[a(class='link' href='#!') make private]] 
+                            or #[kbd #[a(class='link' href='#!') hide]] button to make the post hidden from you or the public.
+                        p.
+                            To show one of your private posts, click the arrow at the top right of the post. 
+                            You will be presented with the same drop down box. Click the #[kbd #[a(class='link' href='#!') make public]] 
+                            button to make the post visible to the public.
+                        p.
+                            To show all posts from other people that you've previously hidden, 
+                            click the #[kbd #[a(class='link' href='/dashboard#clearhidden') clear hidden]] button.
+        div(class='row')
+            div(class='col s12 m10 l8 offset-m1 offset-l2')
+                div(class='card')
+                    div(class='card-content')
+                        span(class='card-title') Deleting Posts
+                    div(class='card-action')
+                        p.
+                            To delete an existing post, click the arrow at the top right of each post. You will be presented 
+                            with a drop down box. Click the #[kbd #[a(class='link' href='#!') delete post]] button to delete the post.
+        div(class='row')
+            div(class='col s12 m10 l8 offset-m1 offset-l2')
+                div(class='card')
+                    div(class='card-content')
+                        span(class='card-title') Terminating Your Account
+                    div(class='card-action')
+                        p.
+                            To terminate your account, simply click the #[kbd #[a(class='link' href='/dashboard#terminate') terminate account]] 
+                            button. All posts and comments made under your account will also be removed upon account termination. This action 
+                            cannot be undone.
+block scripts
+    script.
+        $('#frm-login').submit((e) => {
+            if ($('#frm-login').valid())
+                $('.preloader').css({
+                    opacity: 1,
+                    display: 'flex'
+                }, 100);
+        });

@@ -1,0 +1,87 @@
+extends template
+
+block content
+    div(class='container')
+        div(class='row')
+            div(class='col s12 m10 l8 offset-m1 offset-l2')
+                div(class='card')
+                    div(class='card-content')
+                        span(class='card-title center')= title
+        div(class='row')
+            div(class='col s12 m10 l8 offset-m1 offset-l2')
+                div(class='card')
+                    div(class='card-content')
+                        span(class='card-title') Using the UDC-Post HTML5 Component
+                    div(class='card-action')
+                        p.
+                            To use the #[kbd #[a(class='link' href='#!') udc-post]] component, it will require the following attributes:
+                        ul(class='collection')
+                            li(class='collection-item')
+                                b(class='title')
+                                    div(class='col s6') Attribute Name
+                                    div(class='col s6') #[span(class='right') Attribute ID]
+                                    div(class='clearfix')
+                            li(class='collection-item')
+                                div(class='col s6') Session User ID
+                                div(class='col s6') #[code(class='right') session-uid]
+                                div(class='clearfix')
+                            li(class='collection-item')
+                                div(class='col s6') Post ID
+                                div(class='col s6') #[code(class='right') uid]
+                                div(class='clearfix')
+                            li(class='collection-item')
+                                div(class='col s6') Post Author ID
+                                div(class='col s6') #[code(class='right') author-uid]
+                                div(class='clearfix')
+                            li(class='collection-item')
+                                div(class='col s6') Post Author Username
+                                div(class='col s6') #[code(class='right') author]
+                                div(class='clearfix')
+                            li(class='collection-item')
+                                div(class='col s6') Post Created Date (Short)
+                                div(class='col s6') #[code(class='right') date]
+                                div(class='clearfix')
+                            li(class='collection-item')
+                                div(class='col s6') Post Created Date (Long)
+                                div(class='col s6') #[code(class='right') full-date]
+                                div(class='clearfix')
+                            li(class='collection-item')
+                                div(class='col s6') Post Message
+                                div(class='col s6') #[code(class='right') message]
+                                div(class='clearfix')
+                            li(class='collection-item')
+                                div(class='col s6') Post Visibility
+                                div(class='col s6') #[code(class='right') display]
+                                div(class='clearfix')
+                        p.
+                            HTML Usage:
+                        pre(class='code').
+                            &lt;udc-post session-uid='7f3fe50e-c5ad-414e-bddf-d2a9a007bbfc'
+                                    uid='7f3fe50e-c5ad-414e-bddf-d2a9a007bbfc'
+                                    author-uid='7f3fe50e-c5ad-414e-bddf-d2a9a007bbfc'
+                                    author='Xx420SniperxX'
+                                    date='11 November 2017'
+                                    full-date='Saturday, November 11th, 2017, 11:52 AM'
+                                    message='This is a test message'
+                                    display='public'/&gt;
+                        p.
+                            Pug/Jade Usage:
+                        pre(class='code').
+                            udc-post(session-uid='7f3fe50e-c5ad-414e-bddf-d2a9a007bbfc',
+                                    uid='30f2cf9d-6793-47a5-b2ef-45a14249bf0b',
+                                    author-uid='7f3fe50e-c5ad-414e-bddf-d2a9a007bbfc',
+                                    author='Xx420SniperxX',
+                                    date='11 November 2017'
+                                    full-date='Saturday, November 11th, 2017, 11:52 AM'
+                                    message='This is a test message',
+                                    display='public')
+
+block scripts
+    script.
+        $('#frm-login').submit((e) => {
+            if ($('#frm-login').valid())
+                $('.preloader').css({
+                    opacity: 1,
+                    display: 'flex'
+                }, 100);
+        });
